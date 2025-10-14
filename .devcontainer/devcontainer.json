@@ -1,34 +1,25 @@
 // Tên file: .devcontainer/devcontainer.json
 {
-  // Tên hiển thị của Codespace (Không bắt buộc, nhưng nên có)
   "name": "Dart Development Environment", 
 
-  // Image cơ bản (Universal Image là Best Practice cho tính ổn định)
-  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+  // CHUYỂN SANG IMAGE CHÍNH THỨC NODE/TYPESCRIPT (ổn định hơn Universal Image)
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20", 
   
-  // SỬ DỤNG FEATURES ĐỂ CÀI ĐẶT DART/FLUTTER
-  // Đây là cách đáng tin cậy để thêm SDK vào container
-  "features": {
-    "ghcr.io/devcontainers/features/dart:1": {} // Feature Dart chính thức
-  },
+  // XÓA PHẦN "features" ĐANG GÂY LỖI TRUY CẬP
+  // "features": { ... }
+
+  // CÀI ĐẶT DART SDK THỦ CÔNG QUA LỆNH (Best Practice thay thế)
+  // Lệnh này cài đặt Dart từ kho apt của Ubuntu/Debian
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y dart",
   
-  // Tùy chỉnh VS Code (Extension, Settings, v.v.)
   "customizations": {
     "vscode": {
-      // Tự động cài đặt các extension cần thiết
       "extensions": [
-        "Dart-Code.dart-code", 
-        "Dart-Code.flutter"
+        "Dart-Code.dart-code"
+        // Chỉ cần Dart-Code, vì bạn đang làm bài tập Console
       ]
-      // Thêm các cài đặt VS Code khác ở đây nếu cần (vd: font size)
-      // "settings": { ... }
     }
   },
 
-  // (Tùy chọn) Chạy lệnh sau khi container được tạo
-  "postCreateCommand": "dart --version",
-  
-  // Đặt người dùng chạy mặc định bên trong container
-  // Thường là 'vscode' để tránh các vấn đề về quyền truy cập
   "remoteUser": "vscode"
 }
